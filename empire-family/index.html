@@ -3,6 +3,10 @@
 <head>
   <meta charset="UTF-8">
   <title>Empire Family</title>
+
+  <!-- Favicon -->
+  <link rel="icon" type="image/png" href="https://i.ibb.co/BHz6q3XP/logo.png">
+
   <style>
     body {
       margin: 0;
@@ -89,12 +93,18 @@
       padding: 10px 20px;
       background: #ffcc00;
       color: #111;
-      border-radius: 8px;
-      text-decoration: none;
+      border-radius: 12px;
       font-weight: bold;
-      transition: 0.3s;
+      text-decoration: none;
+      font-size: 18px;
+      transition: transform 0.3s, box-shadow 0.3s;
+      display: inline-block;
     }
-    .profile-btn:hover { background: #e6b800; }
+    .profile-btn:hover {
+      background: #e6b800;
+      transform: scale(1.05);
+      box-shadow: 0 0 15px rgba(255,204,0,0.7);
+    }
 
     /* --- Sections --- */
     section { padding: 80px 20px; text-align: center; }
@@ -219,7 +229,7 @@
     <a href="#about">О нас</a>
     <a href="#members">Руководство</a>
     <a href="#contact">Заявка в семью</a>
-    <a href="/api/auth" class="profile-btn" id="discord-login">Войти через Discord</a>
+    <a href="profile.html" class="profile-btn">Профиль</a>
   </nav>
 </header>
 
