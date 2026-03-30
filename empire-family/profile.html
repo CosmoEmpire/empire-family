@@ -2,42 +2,95 @@
 <html lang="ru">
 <head>
   <meta charset="UTF-8">
-  <title>Профиль - Empire Family</title>
+  <title>Профиль Empire Family</title>
   <style>
-    body { font-family: Arial, sans-serif; background: #111; color: #fff; text-align: center; padding: 50px; }
-    .avatar { border-radius: 50%; width: 120px; height: 120px; }
-    ul { list-style: none; padding: 0; }
-    li { background: rgba(255,204,0,0.2); margin: 5px 0; padding: 5px 10px; border-radius: 8px; display: inline-block; }
-    a.logout { color: #ffcc00; display: block; margin-top: 20px; text-decoration: none; font-weight: bold; }
-    a.logout:hover { text-decoration: underline; }
+    body {
+      margin: 0;
+      font-family: 'Arial', sans-serif;
+      background: linear-gradient(135deg, #0d0d0d, #1a1a1a, #111111);
+      color: white;
+      text-align: center;
+    }
+    header {
+      padding: 40px 0;
+      background: #111;
+      text-align: center;
+    }
+    header h1 { color: #ffcc00; margin: 0; }
+    .profile-container {
+      margin-top: 50px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 20px;
+    }
+    .avatar {
+      width: 120px;
+      height: 120px;
+      border-radius: 50%;
+      border: 3px solid #ffcc00;
+    }
+    .username { font-size: 28px; color: #ffcc00; }
+    .roles { margin-top: 20px; display: flex; gap: 10px; flex-wrap: wrap; justify-content: center; }
+    .role {
+      background: #222;
+      color: #ffcc00;
+      padding: 8px 15px;
+      border-radius: 8px;
+      font-weight: bold;
+    }
+    .logout-btn {
+      margin-top: 30px;
+      padding: 12px 25px;
+      background: #ffcc00;
+      color: #111;
+      border-radius: 10px;
+      text-decoration: none;
+      font-weight: bold;
+      transition: 0.3s;
+    }
+    .logout-btn:hover { background: #e6b800; }
   </style>
 </head>
 <body>
-  <div id="profile">Загрузка профиля...</div>
 
-  <script>
-    function getCookie(name){
-      const value = `; ${document.cookie}`;
-      const parts = value.split(`; ${name}=`);
-      if(parts.length===2) return parts.pop().split(';').shift();
-    }
+<header>
+  <h1>Профиль Empire Family</h1>
+</header>
 
-    const userCookie = getCookie('discord_user');
-    const container = document.getElementById('profile');
+<div class="profile-container" id="profile">
+  <p>Загрузка профиля...</p>
+</div>
 
-    if(userCookie){
-      const user = JSON.parse(userCookie);
-      container.innerHTML = `
-        <img src="https://cdn.discordapp.com/avatars/${user.id}/${user.avatar}.png" class="avatar">
-        <h2>${user.username}#${user.discriminator}</h2>
-        <p>ID: ${user.id}</p>
-        <h3>Роли на сервере:</h3>
-        <ul>${user.roles.map(r=>`<li>${r}</li>`).join('')}</ul>
-        <a href="/api/logout" class="logout">Выйти</a>
-      `;
-    } else {
-      container.innerHTML = `<p>Вы не авторизованы. <a href="/api/auth">Войти через Discord</a></p>`;
-    }
-  </script>
+<script>
+  // Функция для чтения куки
+  function getCookie(name) {
+    const value = `; ${document.cookie}`;
+    const parts = value.split(`; ${name}=`);
+    if (parts.length === 2) return parts.pop().split(';').shift();
+  }
+
+  const profileDiv = document.getElementById('profile');
+  const cookie = getCookie('discord_user');
+
+  if (!cookie) {
+    profileDiv.innerHTML = `<a href="/api/auth" class="logout-btn">Войти через Discord</a>`;
+  } else {
+    const user = JSON.parse(decodeURIComponent(cookie));
+    
+    // Пример отображения ролей — можно будет динамически подгружать через бота
+    const roles = ["Основатель", "VIP", "Модератор"]; // Заглушка для теста
+
+    profileDiv.innerHTML = `
+      <img src="https://cdn.discordapp.com/avatars/${user.id}/${user.avatar}.png" alt="Аватар" class="avatar">
+      <div class="username">${user.username}</div>
+      <div class="roles">
+        ${roles.map(r => `<span class="role">${r}</span>`).join('')}
+      </div>
+      <a href="/api/logout" class="logout-btn">Выйти</a>
+    `;
+  }
+</script>
+
 </body>
 </html>

@@ -1,4 +1,73 @@
-export default function handler(req, res) {
-  // Просто проверяем, что функция работает
-  res.status(200).json({ message: "API Discord auth работает!" });
+// /api/auth.js
+
+import fetch from "node-fetch";
+
+export default async function handler(req, res) {
+  const clientId = process.env.1488139941300146316;
+  const clientSecret = process.env.YOO3Y3ESccoCNFfwyTMbztJM7UwDqKfE;
+  const botToken = process.env.MTQ4ODEzOTk0MTMwMDE0NjMxNg.GgR7Qx.Fe4TWdRAdgnTAe6SYzUVh2kvGZLHLbjEPOKGco;
+  const guildId = process.env.1372646239077928980;
+
+  const redirectUri = `https://${req.headers.host}/profile.html`;
+  const code = req.query.code;
+
+  if (!code) {
+    // Перенаправляем пользователя на Discord OAuth
+    const params = new URLSearchParams({
+      client_id: clientId,
+      redirect_uri: redirectUri,
+      response_type: "code",
+      scope: "identify guilds"
+    });
+    return res.redirect(`https://discord.com/api/oauth2/authorize?${params.toString()}`);
+  }
+
+  try {
+    // Получаем токен доступа
+    const tokenRes = await fetch("https://discord.com/api/oauth2/token", {
+      method: "POST",
+      headers: { "Content-Type": "application/x-www-form-urlencoded" },
+      body: new URLSearchParams({
+        client_id: clientId,
+        client_secret: clientSecret,
+        grant_type: "authorization_code",
+        code,
+        redirect_uri: redirectUri,
+        scope: "identify guilds"
+      })
+    });
+    const tokenData = await tokenRes.json();
+
+    // Получаем информацию о пользователе
+    const userRes = await fetch("https://discord.com/api/users/@me", {
+      headers: { Authorization: `Bearer ${tokenData.access_token}` }
+    });
+    const userData = await userRes.json();
+
+    // Получаем список серверов пользователя
+    const guildsRes = await fetch("https://discord.com/api/users/@me/guilds", {
+      headers: { Authorization: `Bearer ${tokenData.access_token}` }
+    });
+    const guildsData = await guildsRes.json();
+
+    // Проверяем, есть ли пользователь на нужном сервере
+    const isInGuild = guildsData.some(g => g.id === guildId);
+
+    if (!isInGuild) {
+      return res.status(403).send("Вы не состоите в нужном сервере Discord.");
+    }
+
+    // Сохраняем куку с минимальной инфой (имя и ID)
+    res.setHeader("Set-Cookie", `discord_user=${encodeURIComponent(JSON.stringify({
+      id: userData.id,
+      username: userData.username,
+      avatar: userData.avatar
+    }))}; Path=/; HttpOnly; Max-Age=3600`);
+
+    // Перенаправляем на профиль
+    res.redirect("/profile.html");
+  } catch (err) {
+    console.error(err);
+    res.status(500).send("Ошибка авторизации через Discord.");
+  }
 }
