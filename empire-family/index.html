@@ -3,10 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <title>Empire Family</title>
-
-  <!-- Favicon -->
   <link rel="icon" type="image/png" href="https://i.ibb.co/BHz6q3XP/logo.png">
-
   <style>
     body {
       margin: 0;
@@ -16,28 +13,13 @@
       scroll-behavior: smooth;
     }
 
-    /* --- Header с анимацией --- */
+    /* --- Header --- */
     header {
       padding: 40px 0;
       text-align: center;
-      position: relative;
-      overflow: hidden;
       background: linear-gradient(270deg, #111111, #1a1a1a, #111111);
       background-size: 600% 600%;
       animation: gradientShift 15s ease infinite;
-    }
-
-    header::before {
-      content: '';
-      position: absolute;
-      top: -50%;
-      left: -50%;
-      width: 200%;
-      height: 200%;
-      background: linear-gradient(120deg, rgba(255,255,255,0.05) 0%, rgba(255,255,255,0.2) 50%, rgba(255,255,255,0.05) 100%);
-      transform: rotate(45deg);
-      animation: shineMove 6s linear infinite;
-      pointer-events: none;
     }
 
     @keyframes gradientShift {
@@ -46,64 +28,47 @@
       100% { background-position: 0% 50%; }
     }
 
-    @keyframes shineMove {
-      0% { transform: rotate(45deg) translate(-100%, -100%); }
-      100% { transform: rotate(45deg) translate(100%, 100%); }
+    header h1 { font-size: 60px; color: #ffcc00; margin: 0; letter-spacing: 5px; }
+
+    nav {
+      margin-top: 20px;
     }
 
-    header h1 {
-      font-size: 60px;
-      color: #ffcc00;
-      margin: 0;
-      letter-spacing: 5px;
-      text-shadow: 2px 2px 6px rgba(0,0,0,0.7);
-      z-index: 2;
-      position: relative;
-      animation: textGlow 3s ease-in-out infinite;
-    }
-
-    @keyframes textGlow {
-      0%,100% { color: #ffcc00; text-shadow: 2px 2px 6px rgba(0,0,0,0.7);}
-      50% { color: #ffd633; text-shadow: 2px 2px 12px rgba(255,204,0,0.8);}
-    }
-
-    header div {
-      position: relative;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      gap: 20px;
-      flex-wrap: wrap;
-      z-index: 1;
-    }
-
-    header img { height: 100px; }
-
-    nav { margin-top: 20px; position: relative; z-index: 2; }
-    nav a {
-      color: white;
+    nav a.register-btn {
+      padding: 12px 25px;
+      background: linear-gradient(45deg, #ffcc00, #ffd633);
+      color: #111;
+      font-weight: bold;
+      border-radius: 12px;
       text-decoration: none;
-      margin: 0 15px;
       font-size: 18px;
       transition: 0.3s;
+      box-shadow: 0 0 10px rgba(255,204,0,0.5);
+      position: relative;
+      overflow: hidden;
     }
-    nav a:hover { color: #ffcc00; }
 
-    .profile-btn {
-      padding: 10px 20px;
-      background: #ffcc00;
-      color: #111;
-      border-radius: 12px;
-      font-weight: bold;
-      text-decoration: none;
-      font-size: 18px;
-      transition: transform 0.3s, box-shadow 0.3s;
-      display: inline-block;
+    nav a.register-btn::before {
+      content: '';
+      position: absolute;
+      top: -50%;
+      left: -50%;
+      width: 200%;
+      height: 200%;
+      background: rgba(255,255,255,0.2);
+      transform: rotate(45deg);
+      transition: all 0.5s;
     }
-    .profile-btn:hover {
-      background: #e6b800;
+
+    nav a.register-btn:hover::before {
+      transform: rotate(45deg) translate(50%, 50%);
+    }
+
+    nav a.register-btn:hover {
+      background: linear-gradient(45deg, #ffd633, #ffcc00);
+      color: #111;
+      box-shadow: 0 0 20px rgba(255,204,0,0.8);
       transform: scale(1.05);
-      box-shadow: 0 0 15px rgba(255,204,0,0.7);
     }
 
     /* --- Sections --- */
@@ -111,62 +76,15 @@
     section h2 { font-size: 40px; margin-bottom: 30px; color: #ffcc00; }
     section p { font-size: 18px; max-width: 700px; margin: auto; line-height: 1.6; }
 
-    /* --- Member Cards --- */
-    .members-container {
-      display: flex;
-      justify-content: center;
-      gap: 40px;
-      margin-top: 40px;
-      flex-wrap: wrap;
-    }
-
-    .member-card {
-      display: block;
-      background: rgba(34,34,34,0.9);
-      padding: 25px 20px;
-      width: 220px;
-      border-radius: 15px;
-      text-align: center;
-      transition: transform 0.3s, box-shadow 0.3s, background 0.3s, border 0.3s;
-      color: #fff;
-      text-decoration: none;
-      border: 2px solid rgba(255,204,0,0);
-      position: relative;
-    }
-    .member-card:hover {
-      transform: translateY(-10px);
-      box-shadow: 0 10px 20px rgba(255,204,0,0.5);
-      background: rgba(50,50,50,0.95);
-      border: 2px solid rgba(255,204,0,0.6);
-    }
-    .member-card h3 { margin: 15px 0 10px 0; color: #ffcc00; font-size: 20px; }
-    .member-card p { font-size: 16px; color: #ddd; }
-
-    .tooltip {
-      position: absolute;
-      bottom: -25px;
-      left: 50%;
-      transform: translateX(-50%);
-      background: #ffcc00;
-      color: #111;
-      padding: 5px 10px;
-      border-radius: 5px;
-      font-size: 12px;
-      white-space: nowrap;
-      opacity: 0;
-      pointer-events: none;
-      transition: opacity 0.3s;
-    }
-    .member-card:hover .tooltip { opacity: 1; }
-
-    /* --- Form --- */
+    /* --- Registration Form --- */
     .application-form {
       display: flex;
       flex-direction: column;
       max-width: 500px;
-      margin: 30px auto 0;
+      margin: auto;
       gap: 15px;
     }
+
     .application-form input,
     .application-form textarea {
       padding: 12px 15px;
@@ -178,12 +96,14 @@
       resize: none;
       transition: 0.3s;
     }
+
     .application-form input:focus,
     .application-form textarea:focus {
       outline: none;
       border-color: #ffcc00;
       box-shadow: 0 0 10px rgba(255,204,0,0.5);
     }
+
     .application-form button {
       padding: 15px;
       background: #ffcc00;
@@ -194,6 +114,7 @@
       cursor: pointer;
       transition: 0.3s;
     }
+
     .application-form button:hover { background: #e6b800; }
 
     footer {
@@ -203,88 +124,49 @@
       text-align: center;
     }
 
-    .fade-in { opacity: 0; animation: fadeIn 1s forwards; }
-    .fade-in.delay-1 { animation-delay: 0.3s; }
-    .fade-in.delay-2 { animation-delay: 0.6s; }
-    .fade-in.delay-3 { animation-delay: 0.9s; }
-
-    @keyframes fadeIn { to { opacity: 1; } }
-
     @media(max-width: 800px){
-      .members-container { flex-direction: column; gap: 20px; align-items: center; }
-      header div { flex-direction: column; }
-      header img { height: 80px; margin-bottom: 10px; }
-      .member-card { width: 80%; }
+      nav a.register-btn { display: block; margin: 10px auto; }
     }
   </style>
 </head>
 <body>
 
 <header>
-  <div>
-    <img src="https://i.ibb.co/BHz6q3XP/logo.png" alt="Логотип">
-    <h1 class="fade-in">Empire Family</h1>
-  </div>
-  <nav class="fade-in delay-1">
-    <a href="#about">О нас</a>
-    <a href="#members">Руководство</a>
-    <a href="#contact">Заявка в семью</a>
-    <a href="profile.html" class="profile-btn">Профиль</a>
+  <h1>Empire Family</h1>
+  <nav>
+    <a href="#register" class="register-btn">Регистрация</a>
   </nav>
 </header>
 
-<section id="about" class="fade-in delay-2">
+<section id="about">
   <h2>О Empire Family</h2>
   <p>
-    Empire Family — это элитная семья, объединяющая сильных и целеустремленных. 
+    Empire Family — элитная семья, объединяющая сильных и целеустремленных. 
     Мы ценим доверие, стратегию и командный дух. 
-    Каждый член — важная часть нашего успеха.
+    Каждый член важен для нашего успеха.
   </p>
 </section>
 
-<section id="members" class="fade-in delay-3">
-  <h2>Руководство семьи</h2>
-  <div class="members-container">
-    <a href="https://discord.com/users/507564344624676865" target="_blank" class="member-card">
-      <h3>Cosmo Empire</h3>
-      <p>Основатель семьи</p>
-      <span class="tooltip">Перейти в Discord</span>
-    </a>
-    <a href="https://discord.com/users/1089140024735449170" target="_blank" class="member-card">
-      <h3>Alexey Empire</h3>
-      <p>Основатель семьи</p>
-      <span class="tooltip">Перейти в Discord</span>
-    </a>
-  </div>
-</section>
-
-<section id="contact" class="fade-in delay-2">
-  <h2>Заявка в семью</h2>
-  <p>
-    Хотите присоединиться к Empire Family? Заполните форму заявки ниже.
-  </p>
-  <form id="applicationForm" class="application-form">
-    <input type="text" name="realname" placeholder="Ваше реальное имя" required>
+<section id="register">
+  <h2>Регистрация</h2>
+  <p>Заполните форму, чтобы стать частью Empire Family.</p>
+  <form id="registerForm" class="application-form">
+    <input type="text" name="username" placeholder="Ваше имя" required>
     <input type="text" name="discord" placeholder="Ваш ник в Discord" required>
-    <input type="text" name="static" placeholder="Ваш статик" required>
-    <textarea name="goal" placeholder="Цель вступления в семью" required></textarea>
-    <button type="submit">Отправить заявку</button>
+    <textarea name="goal" placeholder="Ваша цель вступления" required></textarea>
+    <button type="submit">Зарегистрироваться</button>
   </form>
 </section>
 
 <script>
-  const form = document.getElementById('applicationForm');
-  const DISCORD_WEBHOOK_URL = "https://discord.com/api/webhooks/1488197643489251588/mmrjNucOu6aPjz-ET2hodkz3gixnZFTIrVaeImZtyRQEOSESM9pN2ipIsV0-5TKOrQFc";
+  const registerForm = document.getElementById('registerForm');
+  const DISCORD_WEBHOOK_URL = "ВАШ_WEBHOOK_ЗДЕСЬ"; // <- вставь сюда свой Discord Webhook
 
-  form.addEventListener('submit', async (e) => {
+  registerForm.addEventListener('submit', async (e) => {
     e.preventDefault();
-    const formData = new FormData(form);
+    const formData = new FormData(registerForm);
     const data = {
-      content: `**Новая заявка в семью**\n` +
-               `**Имя:** ${formData.get('realname')}\n` +
-               `**Discord:** ${formData.get('discord')}\n` +
-               `**Статик:** ${formData.get('static')}\n` +
-               `**Цель вступления:** ${formData.get('goal')}`
+      content: `**Новая регистрация**\n**Имя:** ${formData.get('username')}\n**Discord:** ${formData.get('discord')}\n**Цель:** ${formData.get('goal')}`
     };
 
     try {
@@ -295,14 +177,14 @@
       });
 
       if(response.ok) {
-        alert('Заявка успешно отправлена!');
-        form.reset();
+        alert('Регистрация успешна!');
+        registerForm.reset();
       } else {
-        alert('Ошибка при отправке заявки. Попробуйте позже.');
+        alert('Ошибка отправки, попробуйте позже.');
       }
     } catch (err) {
       console.error(err);
-      alert('Ошибка при отправке заявки. Попробуйте позже.');
+      alert('Ошибка отправки, попробуйте позже.');
     }
   });
 </script>
