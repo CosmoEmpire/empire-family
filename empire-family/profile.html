@@ -7,19 +7,89 @@
   <style>
     body {
       margin: 0;
-      font-family: Arial, sans-serif;
-      background: #111;
-      color: #fff;
+      font-family: 'Arial', sans-serif;
+      background: linear-gradient(135deg, #0d0d0d, #1a1a1a, #111111);
+      color: white;
+      text-align: center;
+      min-height: 100vh;
+    }
+
+    header {
+      background: linear-gradient(270deg, #111111, #1a1a1a, #111111);
+      padding: 30px 0;
       text-align: center;
     }
-    header {
-      background: #222;
-      padding: 20px;
+
+    header h1 {
+      font-size: 50px;
+      color: #ffcc00;
+      margin: 0;
+      text-shadow: 2px 2px 6px rgba(0,0,0,0.7);
     }
-    header h1 { color: #ffcc00; }
-    section { padding: 50px 20px; }
-    a { color: #ffcc00; text-decoration: none; }
-    a:hover { text-decoration: underline; }
+
+    .profile-container {
+      margin: 50px auto;
+      max-width: 500px;
+      background: rgba(34,34,34,0.9);
+      padding: 30px;
+      border-radius: 15px;
+      box-shadow: 0 0 20px rgba(255,204,0,0.3);
+    }
+
+    .avatar {
+      width: 120px;
+      height: 120px;
+      border-radius: 50%;
+      border: 3px solid #ffcc00;
+      margin-bottom: 20px;
+      object-fit: cover;
+      transition: transform 0.3s;
+    }
+
+    .avatar:hover {
+      transform: scale(1.05);
+      box-shadow: 0 0 15px rgba(255,204,0,0.5);
+    }
+
+    h2 { color: #ffcc00; margin-bottom: 10px; }
+    p { color: #ddd; font-size: 16px; line-height: 1.5; margin: 10px 0; }
+
+    .discord-link {
+      display: inline-block;
+      padding: 10px 20px;
+      margin-top: 15px;
+      background: #ffcc00;
+      color: #111;
+      border-radius: 8px;
+      text-decoration: none;
+      font-weight: bold;
+      transition: 0.3s;
+    }
+
+    .discord-link:hover { background: #e6b800; }
+
+    a.back-link {
+      display: block;
+      margin-top: 30px;
+      color: #ffcc00;
+      text-decoration: none;
+      font-size: 16px;
+    }
+
+    a.back-link:hover { text-decoration: underline; }
+
+    footer {
+      background: rgba(17,17,17,0.9);
+      padding: 20px 0;
+      font-size: 14px;
+      text-align: center;
+      margin-top: 50px;
+    }
+
+    @media(max-width: 600px){
+      .profile-container { width: 90%; padding: 20px; }
+      header h1 { font-size: 40px; }
+    }
   </style>
 </head>
 <body>
@@ -28,11 +98,18 @@
   <h1>Профиль Empire Family</h1>
 </header>
 
-<section>
-  <p>Добро пожаловать в свой профиль!</p>
-  <p>Здесь можно добавить информацию о пользователе, статистику и настройки.</p>
-  <a href="index.html">← Назад на главную</a>
-</section>
+<div class="profile-container">
+  <img src="https://i.ibb.co/BHz6q3XP/logo.png" alt="Аватарка" class="avatar">
+  <h2>Cosmo Empire</h2>
+  <p>Роль: Основатель семьи</p>
+  <p>Статус: Активен</p>
+  <a href="https://discord.com/users/507564344624676865" target="_blank" class="discord-link">Перейти в Discord</a>
+  <a href="index.html" class="back-link">← Назад на главную</a>
+</div>
+
+<footer>
+  © 2026 Empire Family. Все права защищены.
+</footer>
 
 </body>
 </html>
