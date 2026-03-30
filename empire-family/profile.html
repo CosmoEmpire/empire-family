@@ -2,95 +2,115 @@
 <html lang="ru">
 <head>
   <meta charset="UTF-8">
-  <title>Профиль Empire Family</title>
+  <title>Профиль — Empire Family</title>
+
+  <!-- Favicon -->
+  <link rel="icon" type="image/png" href="https://i.ibb.co/BHz6q3XP/logo.png">
+
   <style>
     body {
       margin: 0;
       font-family: 'Arial', sans-serif;
       background: linear-gradient(135deg, #0d0d0d, #1a1a1a, #111111);
       color: white;
-      text-align: center;
+      scroll-behavior: smooth;
     }
+
     header {
       padding: 40px 0;
-      background: #111;
       text-align: center;
+      position: relative;
+      overflow: hidden;
+      background: linear-gradient(270deg, #111111, #1a1a1a, #111111);
+      background-size: 600% 600%;
+      animation: gradientShift 15s ease infinite;
     }
-    header h1 { color: #ffcc00; margin: 0; }
-    .profile-container {
-      margin-top: 50px;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 20px;
-    }
-    .avatar {
-      width: 120px;
-      height: 120px;
-      border-radius: 50%;
-      border: 3px solid #ffcc00;
-    }
-    .username { font-size: 28px; color: #ffcc00; }
-    .roles { margin-top: 20px; display: flex; gap: 10px; flex-wrap: wrap; justify-content: center; }
-    .role {
-      background: #222;
+
+    header h1 {
+      font-size: 50px;
       color: #ffcc00;
-      padding: 8px 15px;
-      border-radius: 8px;
-      font-weight: bold;
+      margin: 0;
+      letter-spacing: 5px;
+      text-shadow: 2px 2px 6px rgba(0,0,0,0.7);
     }
-    .logout-btn {
-      margin-top: 30px;
-      padding: 12px 25px;
-      background: #ffcc00;
-      color: #111;
-      border-radius: 10px;
+
+    nav {
+      margin-top: 20px;
+    }
+    nav a {
+      color: white;
       text-decoration: none;
-      font-weight: bold;
+      margin: 0 15px;
+      font-size: 18px;
       transition: 0.3s;
     }
-    .logout-btn:hover { background: #e6b800; }
+    nav a:hover { color: #ffcc00; }
+
+    section {
+      padding: 80px 20px;
+      text-align: center;
+    }
+    section h2 { font-size: 40px; margin-bottom: 30px; color: #ffcc00; }
+    section p { font-size: 18px; max-width: 700px; margin: auto; line-height: 1.6; }
+
+    .role {
+      display: inline-block;
+      margin: 10px;
+      padding: 10px 20px;
+      border-radius: 12px;
+      background: rgba(255,204,0,0.2);
+      color: #ffcc00;
+      font-weight: bold;
+      font-size: 16px;
+      transition: 0.3s;
+    }
+    .role:hover {
+      background: rgba(255,204,0,0.5);
+      transform: scale(1.05);
+    }
+
+    footer {
+      background: rgba(17,17,17,0.9);
+      padding: 30px 0;
+      font-size: 14px;
+      text-align: center;
+    }
+
+    @keyframes gradientShift {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+
+    @media(max-width: 800px){
+      .role { width: 80%; margin: 10px auto; display: block; }
+    }
   </style>
 </head>
 <body>
 
 <header>
   <h1>Профиль Empire Family</h1>
+  <nav>
+    <a href="index.html">Главная</a>
+    <a href="profile.html">Профиль</a>
+  </nav>
 </header>
 
-<div class="profile-container" id="profile">
-  <p>Загрузка профиля...</p>
-</div>
+<section>
+  <h2>Добро пожаловать в профиль!</h2>
+  <p>Здесь будут отображаться ваши роли и информация.</p>
 
-<script>
-  // Функция для чтения куки
-  function getCookie(name) {
-    const value = `; ${document.cookie}`;
-    const parts = value.split(`; ${name}=`);
-    if (parts.length === 2) return parts.pop().split(';').shift();
-  }
+  <div class="roles-container">
+    <span class="role">Основатель семьи</span>
+    <span class="role">Администратор</span>
+    <span class="role">Участник</span>
+  </div>
+</section>
 
-  const profileDiv = document.getElementById('profile');
-  const cookie = getCookie('discord_user');
-
-  if (!cookie) {
-    profileDiv.innerHTML = `<a href="/api/auth" class="logout-btn">Войти через Discord</a>`;
-  } else {
-    const user = JSON.parse(decodeURIComponent(cookie));
-    
-    // Пример отображения ролей — можно будет динамически подгружать через бота
-    const roles = ["Основатель", "VIP", "Модератор"]; // Заглушка для теста
-
-    profileDiv.innerHTML = `
-      <img src="https://cdn.discordapp.com/avatars/${user.id}/${user.avatar}.png" alt="Аватар" class="avatar">
-      <div class="username">${user.username}</div>
-      <div class="roles">
-        ${roles.map(r => `<span class="role">${r}</span>`).join('')}
-      </div>
-      <a href="/api/logout" class="logout-btn">Выйти</a>
-    `;
-  }
-</script>
+<footer>
+  © 2026 Empire Family. Все права защищены.
+</footer>
 
 </body>
 </html>
