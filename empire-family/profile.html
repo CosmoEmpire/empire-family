@@ -4,101 +4,27 @@
   <meta charset="UTF-8">
   <title>Профиль | Empire Family</title>
   <style>
-    body {
-      margin: 0;
-      font-family: Arial, sans-serif;
-      background: linear-gradient(135deg, #0d0d0d, #1a1a1a);
-      color: white;
-    }
-
-    header {
-      padding: 20px;
-      text-align: center;
-      background: #111;
-      border-bottom: 2px solid #ffcc00;
-    }
-
+    body { margin: 0; font-family: Arial, sans-serif; background: linear-gradient(135deg, #0d0d0d, #1a1a1a); color: white; }
+    header { padding: 20px; text-align: center; background: #111; border-bottom: 2px solid #ffcc00; }
     h1 { color: #ffcc00; margin: 0; }
-
-    .container {
-      max-width: 600px;
-      margin: 50px auto;
-      background: #1e1e1e;
-      padding: 30px;
-      border-radius: 15px;
-      box-shadow: 0 0 20px rgba(255,204,0,0.3);
-      text-align: center;
-    }
-
-    input {
-      width: 100%;
-      padding: 10px;
-      margin: 10px 0;
-      border-radius: 8px;
-      border: 1px solid #444;
-      background: #222;
-      color: white;
-    }
-
-    button {
-      padding: 12px;
-      margin-top: 10px;
-      background: #ffcc00;
-      border: none;
-      border-radius: 8px;
-      font-weight: bold;
-      cursor: pointer;
-      width: 100%;
-    }
-
+    .container { max-width: 600px; margin: 50px auto; background: #1e1e1e; padding: 30px; border-radius: 15px; box-shadow: 0 0 20px rgba(255,204,0,0.3); text-align: center; }
+    input { width: 100%; padding: 10px; margin: 10px 0; border-radius: 8px; border: 1px solid #444; background: #222; color: white; }
+    button { padding: 12px; margin-top: 10px; background: #ffcc00; border: none; border-radius: 8px; font-weight: bold; cursor: pointer; width: 100%; }
     .hidden { display: none; }
-
-    .avatar {
-      width: 100px;
-      height: 100px;
-      border-radius: 50%;
-      background: #333;
-      margin: 0 auto 20px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 30px;
-    }
+    .avatar { width: 100px; height: 100px; border-radius: 50%; background: #333; margin: 0 auto 20px; display: flex; align-items: center; justify-content: center; font-size: 30px; }
+    .user { display:flex; justify-content: space-between; align-items:center; margin:10px 0; padding:5px 10px; background: #2a2a2a; border-radius:5px; }
+    .leader { animation: glow 2s infinite alternate; }
+    @keyframes glow { from { box-shadow: 0 0 5px #ffd700; } to { box-shadow: 0 0 20px #ffd700; } }
+    select { padding: 3px; border-radius: 5px; border: none; background: #444; color: #fff; }
   </style>
 </head>
 <body>
 
 <header style="position:relative; overflow:hidden; background: linear-gradient(270deg, #111111, #1a1a1a, #111111); background-size:600% 600%; animation: gradientShift 15s ease infinite; padding:40px 0; text-align:center;">
   <style>
-    @keyframes gradientShift {
-      0% { background-position: 0% 50%; }
-      50% { background-position: 100% 50%; }
-      100% { background-position: 0% 50%; }
-    }
-    @keyframes shineMove {
-      0% { transform: rotate(45deg) translate(-100%, -100%); }
-      100% { transform: rotate(45deg) translate(100%, 100%); }
-    }
-    @keyframes textGlow {
-      0%,100% { color:#ffcc00; text-shadow:2px 2px 6px rgba(0,0,0,0.7);} 
-      50% { color:#ffd633; text-shadow:2px 2px 12px rgba(255,204,0,0.8);} 
-    }
-
-    .header-avatar {
-      position: absolute;
-      top: 20px;
-      right: 30px;
-      width: 50px;
-      height: 50px;
-      border-radius: 50%;
-      background: #333;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-weight: bold;
-      color: white;
-      border: 2px solid #ffcc00;
-    }
+    @keyframes gradientShift { 0% { background-position: 0% 50%; } 50% { background-position: 100% 50%; } 100% { background-position: 0% 50%; } }
+    @keyframes shineMove { 0% { transform: rotate(45deg) translate(-100%, -100%); } 100% { transform: rotate(45deg) translate(100%, 100%); } }
+    @keyframes textGlow { 0%,100% { color:#ffcc00; text-shadow:2px 2px 6px rgba(0,0,0,0.7);} 50% { color:#ffd633; text-shadow:2px 2px 12px rgba(255,204,0,0.8);} }
   </style>
 
   <div style="position:relative; display:flex; justify-content:center; align-items:center; gap:20px; flex-wrap:wrap; z-index:1;">
@@ -116,7 +42,6 @@
   </nav>
 </header>
 
-<!-- CHOICE -->
 <div class="container" id="choiceBox">
   <h2>Добро пожаловать</h2>
   <p>Выберите действие:</p>
@@ -124,7 +49,6 @@
   <button onclick="showRegister()">Зарегистрироваться</button>
 </div>
 
-<!-- LOGIN -->
 <div class="container hidden" id="loginBox">
   <h2>Вход</h2>
   <input type="text" id="login" placeholder="Логин">
@@ -132,103 +56,114 @@
   <button onclick="login()">Войти</button>
 </div>
 
-<!-- REGISTER -->
 <div class="container hidden" id="registerBox">
   <h2>Регистрация</h2>
-  <input type="text" id="regLogin" placeholder="Придумайте логин">
-  <input type="password" id="regPassword" placeholder="Придумайте пароль">
+  <input type="text" id="regLogin" placeholder="Логин (ставьте какой хотите)" required>
+  <input type="text" id="regDiscord" placeholder="Discord (ставьте какой хотите)" required>
+  <input type="text" id="regNickname" placeholder="NickName (впишите свой ник в игре)" required>
   <button onclick="register()">Создать аккаунт</button>
 </div>
 
-<!-- PROFILE -->
 <div class="container hidden" id="profileBox">
   <div class="avatar" id="avatar">👤</div>
-  
   <h2 id="name"></h2>
   <p><b>Discord:</b> <span id="discord"></span></p>
-  <p><b>Статик:</b> <span id="static"></span></p>
-  <p><b>Цель:</b> <span id="goal"></span></p>
+  <p><b>NickName:</b> <span id="nickname"></span></p>
   <button onclick="logout()">Выйти</button>
 </div>
 
+<div class="container hidden" id="adminPanel"></div>
+
 <script>
-  function showLogin() {
-    hideAll();
-    document.getElementById('loginBox').classList.remove('hidden');
-  }
+let users = JSON.parse(localStorage.getItem('users')) || [];
 
-  function showRegister() {
-    hideAll();
-    document.getElementById('registerBox').classList.remove('hidden');
-  }
+function hideAll() {
+  document.getElementById('choiceBox').classList.add('hidden');
+  document.getElementById('loginBox').classList.add('hidden');
+  document.getElementById('registerBox').classList.add('hidden');
+  document.getElementById('profileBox').classList.add('hidden');
+}
 
-  function hideAll() {
-    document.getElementById('choiceBox').classList.add('hidden');
-    document.getElementById('loginBox').classList.add('hidden');
-    document.getElementById('registerBox').classList.add('hidden');
-    document.getElementById('profileBox').classList.add('hidden');
-  }
+function showLogin() { hideAll(); document.getElementById('loginBox').classList.remove('hidden'); }
+function showRegister() { hideAll(); document.getElementById('registerBox').classList.remove('hidden'); }
 
-  function register() {
-    const login = document.getElementById('regLogin').value;
-    const password = document.getElementById('regPassword').value;
+function register() {
+  const login = document.getElementById('regLogin').value;
+  const discord = document.getElementById('regDiscord').value;
+  const nickname = document.getElementById('regNickname').value;
+  const profile = { login, discord, nickname, role: 'member' };
 
-    localStorage.setItem('user', JSON.stringify({ login, password }));
-    alert('Аккаунт создан!');
-    showLogin();
-  }
+  localStorage.setItem('profile', JSON.stringify(profile));
+  users.push(profile);
+  localStorage.setItem('users', JSON.stringify(users));
 
-  function login() {
-    const login = document.getElementById('login').value;
-    const password = document.getElementById('password').value;
+  alert('Аккаунт создан!');
+  showLogin();
+  renderAdminPanel();
+}
 
-    const user = JSON.parse(localStorage.getItem('user'));
-
-    if (user && login === user.login && password === user.password) {
-      localStorage.setItem('auth', 'true');
-      showProfile();
-    } else {
-      alert('Неверный логин или пароль');
-    }
-  }
-
-  function logout() {
-    localStorage.removeItem('auth');
-    location.reload();
-  }
-
-  function showProfile() {
-    hideAll();
-    document.getElementById('profileBox').classList.remove('hidden');
-
-    const profile = JSON.parse(localStorage.getItem('profile'));
-
-    if (profile) {
-      document.getElementById('name').textContent = profile.realname;
-      document.getElementById('discord').textContent = profile.discord;
-      document.getElementById('static').textContent = profile.static;
-      document.getElementById('goal').textContent = profile.goal;
-
-      // 🔥 РОЛИ И АВАТАРЫ
-      const role = profile.role || "member";
-
-      let avatarIcon = "🤖";
-
-      if (role === "leader") {
-        avatarIcon = "👑🤖";
-      } else if (role === "admin") {
-        avatarIcon = "🛡🤖";
-      }
-
-      document.getElementById('avatar').textContent = avatarIcon;
-      document.getElementById('headerAvatar').textContent = avatarIcon;
-    }
-  }
-
-  // авто-вход
-  if (localStorage.getItem('auth') === 'true') {
+function login() {
+  const loginInput = document.getElementById('login').value;
+  const discordInput = document.getElementById('password').value;
+  const profile = JSON.parse(localStorage.getItem('profile'));
+  if(profile && loginInput === profile.login) {
+    localStorage.setItem('auth', 'true');
     showProfile();
+  } else alert('Неверный логин');
+}
+
+function logout() {
+  localStorage.removeItem('auth');
+  location.reload();
+}
+
+function showProfile() {
+  hideAll();
+  document.getElementById('profileBox').classList.remove('hidden');
+
+  const profile = JSON.parse(localStorage.getItem('profile'));
+  if(profile) {
+    document.getElementById('name').textContent = profile.login;
+    document.getElementById('discord').textContent = profile.discord;
+    document.getElementById('nickname').textContent = profile.nickname;
+
+    let avatarIcon = '🤖';
+    if(profile.role === 'leader') avatarIcon = '👑🤖';
+    if(profile.role === 'admin') avatarIcon = '🛡🤖';
+    document.getElementById('avatar').textContent = avatarIcon;
+    document.getElementById('headerAvatar').textContent = avatarIcon;
   }
+}
+
+const isAdmin = JSON.parse(localStorage.getItem('profile'))?.role === 'admin';
+
+function renderAdminPanel() {
+  const panel = document.getElementById('adminPanel');
+  if(!isAdmin) { panel.classList.add('hidden'); return; }
+  panel.classList.remove('hidden');
+  panel.innerHTML = '<h2>Панель управления ролями (Администратор)</h2>';
+  users.forEach((u,i) => {
+    const div = document.createElement('div');
+    div.className = 'user';
+    if(u.role === 'leader') div.classList.add('leader');
+    div.innerHTML = `<span>${u.nickname} (${u.login})</span>` +
+                    `<select data-index="${i}">` +
+                    Object.keys({member:'#00bfff',moderator:'#32cd32',leader:'#ffd700'}).map(r =>
+                      `<option value="${r}" ${u.role===r?'selected':''}>${r}</option>`
+                    ).join('') + '</select>';
+    panel.appendChild(div);
+  });
+  document.querySelectorAll('#adminPanel select').forEach(sel => {
+    sel.addEventListener('change', e => {
+      users[e.target.dataset.index].role = e.target.value;
+      localStorage.setItem('users', JSON.stringify(users));
+      renderAdminPanel();
+    });
+  });
+}
+
+if(localStorage.getItem('auth') === 'true') showProfile();
+renderAdminPanel();
 </script>
 
 </body>
