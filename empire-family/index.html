@@ -273,11 +273,12 @@
       if(response.ok) {
   // сохраняем профиль
   localStorage.setItem('profile', JSON.stringify({
-    realname: formData.get('realname'),
-    discord: formData.get('discord'),
-    static: formData.get('static'),
-    goal: formData.get('goal')
-  }));
+  realname: formData.get('realname'),
+  discord: formData.get('discord'),
+  static: formData.get('static'),
+  goal: formData.get('goal'),
+  role: "member" // можно менять
+}));
 
   alert('Заявка успешно отправлена!');
   

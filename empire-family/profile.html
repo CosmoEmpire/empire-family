@@ -209,10 +209,20 @@
       document.getElementById('static').textContent = profile.static;
       document.getElementById('goal').textContent = profile.goal;
 
-      const defaultAvatar = "https://i.ibb.co/V0KSrgV3/1.png";
+      const role = profile.role || "member";
 
-      document.getElementById('avatar').innerHTML = `<img src="${defaultAvatar}" style="width:100%; height:100%; border-radius:50%; object-fit:cover;">`;
-      document.getElementById('headerAvatar').innerHTML = `<img src="${defaultAvatar}" style="width:100%; height:100%; border-radius:50%; object-fit:cover;">`;
+let avatarIcon = "🤖";
+
+if (role === "leader") {
+  avatarIcon = "👑🤖";
+} else if (role === "admin") {
+  avatarIcon = "🛡🤖";
+} else {
+  avatarIcon = "🤖";
+}
+
+document.getElementById('avatar').textContent = avatarIcon;
+document.getElementById('headerAvatar').textContent = avatarIcon;
     }
   }
 
