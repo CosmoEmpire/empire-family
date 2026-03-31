@@ -42,11 +42,13 @@
 
     button {
       padding: 12px;
+      margin-top: 10px;
       background: #ffcc00;
       border: none;
       border-radius: 8px;
       font-weight: bold;
       cursor: pointer;
+      width: 100%;
     }
 
     .hidden { display: none; }
@@ -70,12 +72,28 @@
   <h1>Профиль</h1>
 </header>
 
+<!-- CHOICE -->
+<div class="container" id="choiceBox">
+  <h2>Добро пожаловать</h2>
+  <p>Выберите действие:</p>
+  <button onclick="showLogin()">Войти</button>
+  <button onclick="showRegister()">Зарегистрироваться</button>
+</div>
+
 <!-- LOGIN -->
-<div class="container" id="loginBox">
+<div class="container hidden" id="loginBox">
   <h2>Вход</h2>
   <input type="text" id="login" placeholder="Логин">
   <input type="password" id="password" placeholder="Пароль">
   <button onclick="login()">Войти</button>
+</div>
+
+<!-- REGISTER -->
+<div class="container hidden" id="registerBox">
+  <h2>Регистрация</h2>
+  <input type="text" id="regLogin" placeholder="Придумайте логин">
+  <input type="password" id="regPassword" placeholder="Придумайте пароль">
+  <button onclick="register()">Создать аккаунт</button>
 </div>
 
 <!-- PROFILE -->
@@ -89,14 +107,39 @@
 </div>
 
 <script>
-  const USER_LOGIN = "admin";
-  const USER_PASSWORD = "1234";
+  function showLogin() {
+    hideAll();
+    document.getElementById('loginBox').classList.remove('hidden');
+  }
+
+  function showRegister() {
+    hideAll();
+    document.getElementById('registerBox').classList.remove('hidden');
+  }
+
+  function hideAll() {
+    document.getElementById('choiceBox').classList.add('hidden');
+    document.getElementById('loginBox').classList.add('hidden');
+    document.getElementById('registerBox').classList.add('hidden');
+    document.getElementById('profileBox').classList.add('hidden');
+  }
+
+  function register() {
+    const login = document.getElementById('regLogin').value;
+    const password = document.getElementById('regPassword').value;
+
+    localStorage.setItem('user', JSON.stringify({ login, password }));
+    alert('Аккаунт создан!');
+    showLogin();
+  }
 
   function login() {
     const login = document.getElementById('login').value;
     const password = document.getElementById('password').value;
 
-    if (login === USER_LOGIN && password === USER_PASSWORD) {
+    const user = JSON.parse(localStorage.getItem('user'));
+
+    if (user && login === user.login && password === user.password) {
       localStorage.setItem('auth', 'true');
       showProfile();
     } else {
@@ -110,7 +153,7 @@
   }
 
   function showProfile() {
-    document.getElementById('loginBox').classList.add('hidden');
+    hideAll();
     document.getElementById('profileBox').classList.remove('hidden');
 
     const profile = JSON.parse(localStorage.getItem('profile'));
@@ -124,7 +167,6 @@
     }
   }
 
-  // авто-вход
   if (localStorage.getItem('auth') === 'true') {
     showProfile();
   }
