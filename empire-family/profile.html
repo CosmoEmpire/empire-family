@@ -70,6 +70,7 @@
   <p><b>Discord:</b> <span id="discord"></span></p>
   <p><b>NickName:</b> <span id="nickname"></span></p>
   <button onclick="logout()">Выйти</button>
+  <button id="makeAdminBtn" class="hidden">Сделать себя администратором</button>
 </div>
 
 <div class="container hidden" id="adminPanel"></div>
@@ -122,18 +123,33 @@ function showProfile() {
   hideAll();
   document.getElementById('profileBox').classList.remove('hidden');
   const profile = JSON.parse(localStorage.getItem('profile'));
+  const makeAdminBtn = document.getElementById('makeAdminBtn');
   if(profile) {
     document.getElementById('name').textContent = profile.login;
     document.getElementById('discord').textContent = profile.discord;
     document.getElementById('nickname').textContent = profile.nickname;
+
+    // показываем кнопку админа только если роль не admin
+    if(profile.role !== 'admin') {
+      makeAdminBtn.classList.remove('hidden');
+      makeAdminBtn.onclick = () => {
+        profile.role = 'admin';
+        localStorage.setItem('profile', JSON.stringify(profile));
+        alert('Теперь вы администратор!');
+        renderAdminPanel();
+        makeAdminBtn.classList.add('hidden');
+      };
+    } else {
+      makeAdminBtn.classList.add('hidden');
+    }
   }
 }
 
-const isAdmin = JSON.parse(localStorage.getItem('profile'))?.role === 'admin';
-
 function renderAdminPanel() {
+  const profile = JSON.parse(localStorage.getItem('profile'));
   const panel = document.getElementById('adminPanel');
-  if(!isAdmin) { panel.classList.add('hidden'); return; }
+  if(!profile || profile.role !== 'admin') { panel.classList.add('hidden'); return; }
+
   panel.classList.remove('hidden');
   panel.innerHTML = '<h2>Панель управления ролями (Администратор)</h2>';
   users.forEach((u,i) => {
