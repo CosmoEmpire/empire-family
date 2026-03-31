@@ -32,10 +32,6 @@
     <h1 style="font-size:50px; letter-spacing:4px; animation:textGlow 3s ease-in-out infinite; margin:0;">Empire Профиль</h1>
   </div>
 
-  <div class="header-avatar" id="headerAvatar"></div>
-
-  <div style="position:absolute; top:-50%; left:-50%; width:200%; height:200%; background: linear-gradient(120deg, rgba(255,255,255,0.05) 0%, rgba(255,255,255,0.2) 50%, rgba(255,255,255,0.05) 100%); transform: rotate(45deg); animation: shineMove 6s linear infinite;"></div>
-
   <nav style="margin-top:20px; position:relative; z-index:2;">
     <a href="index.html" style="color:white; margin:0 15px; text-decoration:none;">Главная</a>
     <a href="#" style="color:#ffcc00; margin:0 15px; text-decoration:none;">Профиль</a>
@@ -76,6 +72,7 @@
 <div class="container hidden" id="adminPanel"></div>
 
 <script>
+const ADMIN_LOGIN = "CosmoEmpire"; // замените на логин пользователя, которому разрешен доступ
 let users = JSON.parse(localStorage.getItem('users')) || [];
 
 function hideAll() {
@@ -122,15 +119,17 @@ function logout() {
 function showProfile() {
   hideAll();
   document.getElementById('profileBox').classList.remove('hidden');
+
   const profile = JSON.parse(localStorage.getItem('profile'));
   const makeAdminBtn = document.getElementById('makeAdminBtn');
-  if(profile) {
+
+  if (profile) {
     document.getElementById('name').textContent = profile.login;
     document.getElementById('discord').textContent = profile.discord;
     document.getElementById('nickname').textContent = profile.nickname;
 
-    // показываем кнопку админа только если роль не admin
-    if(profile.role !== 'admin') {
+    // кнопка для выдачи admin доступна только определенному пользователю
+    if(profile.login === ADMIN_LOGIN && profile.role !== 'admin') {
       makeAdminBtn.classList.remove('hidden');
       makeAdminBtn.onclick = () => {
         profile.role = 'admin';
