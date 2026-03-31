@@ -15,6 +15,29 @@
     .leader { animation: glow 2s infinite alternate; }
     @keyframes glow { from { box-shadow: 0 0 5px #ffd700; } to { box-shadow: 0 0 20px #ffd700; } }
     select { padding: 3px; border-radius: 5px; border: none; background: #444; color: #fff; }
+	.block {
+  background: #2a2a2a;
+  padding: 20px;
+  margin-top: 20px;
+  border-radius: 10px;
+  text-align: left;
+}
+
+.block h3 {
+  color: #ffcc00;
+}
+
+.block ul {
+  list-style: none;
+  padding: 0;
+}
+
+.block li {
+  background: #333;
+  margin: 5px 0;
+  padding: 8px;
+  border-radius: 5px;
+}
   </style>
 </head>
 <body>
@@ -61,11 +84,33 @@
 </div>
 
 <div class="container hidden" id="profileBox">
+
   <h2 id="name"></h2>
-  <p><b>Discord:</b> <span id="discord"></span></p>
-  <p><b>NickName:</b> <span id="nickname"></span></p>
+
+  <!-- 📊 Статистика -->
+  <div class="block">
+    <h3>📊 Статистика</h3>
+    <p>Контрактов выполнено: <span id="contracts">0</span></p>
+    <p>Заработано: <span id="money">0</span>$</p>
+  </div>
+
+  <!-- 📜 История -->
+  <div class="block">
+    <h3>📜 История контрактов</h3>
+    <ul id="history"></ul>
+    <input type="text" id="newContract" placeholder="Добавить контракт">
+    <button onclick="addContract()">Добавить</button>
+  </div>
+
+  <!-- 💰 Премии -->
+  <div class="block">
+    <h3>💰 Премии</h3>
+    <ul id="bonuses"></ul>
+    <input type="text" id="newBonus" placeholder="Добавить премию">
+    <button onclick="addBonus()">Добавить</button>
+  </div>
+
   <button onclick="logout()">Выйти</button>
-  <button id="makeAdminBtn" class="hidden">Сделать себя администратором</button>
 </div>
 
 <div class="container hidden" id="adminPanel"></div>
@@ -176,6 +221,74 @@ function renderAdminPanel() {
 }
 
 if(localStorage.getItem('auth') === 'true') showProfile();
+function showProfile() {
+  hideAll();
+  document.getElementById('profileBox').classList.remove('hidden');
+
+  const profile = JSON.parse(localStorage.getItem('profile'));
+
+  document.getElementById('name').textContent = profile.login;
+
+  document.getElementById('contracts').textContent = profile.contracts || 0;
+  document.getElementById('money').textContent = profile.money || 0;
+
+  renderHistory();
+  renderBonuses();
+}
+function renderHistory() {
+  const profile = JSON.parse(localStorage.getItem('profile'));
+  const list = document.getElementById('history');
+
+  list.innerHTML = "";
+
+  (profile.history || []).forEach(item => {
+    const li = document.createElement('li');
+    li.textContent = item;
+    list.appendChild(li);
+  });
+}
+
+function addContract() {
+  const input = document.getElementById('newContract');
+  const profile = JSON.parse(localStorage.getItem('profile'));
+
+  if (!profile.history) profile.history = [];
+
+  profile.history.push(input.value);
+  profile.contracts = (profile.contracts || 0) + 1;
+  profile.money = (profile.money || 0) + 1000;
+
+  localStorage.setItem('profile', JSON.stringify(profile));
+
+  input.value = "";
+  showProfile();
+}
+function renderBonuses() {
+  const profile = JSON.parse(localStorage.getItem('profile'));
+  const list = document.getElementById('bonuses');
+
+  list.innerHTML = "";
+
+  (profile.bonuses || []).forEach(item => {
+    const li = document.createElement('li');
+    li.textContent = item;
+    list.appendChild(li);
+  });
+}
+
+function addBonus() {
+  const input = document.getElementById('newBonus');
+  const profile = JSON.parse(localStorage.getItem('profile'));
+
+  if (!profile.bonuses) profile.bonuses = [];
+
+  profile.bonuses.push(input.value);
+
+  localStorage.setItem('profile', JSON.stringify(profile));
+
+  input.value = "";
+  showProfile();
+}
 </script>
 
 </body>
