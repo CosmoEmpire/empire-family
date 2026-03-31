@@ -209,28 +209,26 @@
       document.getElementById('static').textContent = profile.static;
       document.getElementById('goal').textContent = profile.goal;
 
+      // 🔥 РОЛИ И АВАТАРЫ
       const role = profile.role || "member";
 
-let avatarIcon = "🤖";
+      let avatarIcon = "🤖";
 
-if (role === "leader") {
-  avatarIcon = "👑🤖";
-} else if (role === "admin") {
-  avatarIcon = "🛡🤖";
-} else {
-  avatarIcon = "🤖";
-}
+      if (role === "leader") {
+        avatarIcon = "👑🤖";
+      } else if (role === "admin") {
+        avatarIcon = "🛡🤖";
+      }
 
-document.getElementById('avatar').textContent = avatarIcon;
-document.getElementById('headerAvatar').textContent = avatarIcon;
+      document.getElementById('avatar').textContent = avatarIcon;
+      document.getElementById('headerAvatar').textContent = avatarIcon;
     }
   }
 
+  // авто-вход
   if (localStorage.getItem('auth') === 'true') {
     showProfile();
   }
-
-  
 </script>
 
 </body>
