@@ -271,9 +271,19 @@
       });
 
       if(response.ok) {
-        alert('Заявка успешно отправлена!');
-        form.reset();
-      } else {
+  // сохраняем профиль
+  localStorage.setItem('profile', JSON.stringify({
+    realname: formData.get('realname'),
+    discord: formData.get('discord'),
+    static: formData.get('static'),
+    goal: formData.get('goal')
+  }));
+
+  alert('Заявка успешно отправлена!');
+  
+  // перекидываем на профиль
+  window.location.href = "profile.html";
+} else {
         alert('Ошибка при отправке заявки. Попробуйте позже.');
       }
     } catch (err) {
