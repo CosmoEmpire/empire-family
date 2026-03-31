@@ -1,26 +1,46 @@
+```html
 <!DOCTYPE html>
 <html lang="ru">
 <head>
-  <meta charset="UTF-8">
-  <title>Профиль | Empire Family</title>
-  <style>
-    body { margin: 0; font-family: Arial, sans-serif; background: linear-gradient(135deg, #0d0d0d, #1a1a1a); color: white; }
-    header { padding: 20px; text-align: center; background: #111; border-bottom: 2px solid #ffcc00; }
-    h1 { color: #ffcc00; margin: 0; }
-    .container { max-width: 600px; margin: 50px auto; background: #1e1e1e; padding: 30px; border-radius: 15px; box-shadow: 0 0 20px rgba(255,204,0,0.3); text-align: center; }
-    input { width: 100%; padding: 10px; margin: 10px 0; border-radius: 8px; border: 1px solid #444; background: #222; color: white; }
-    button { padding: 12px; margin-top: 10px; background: #ffcc00; border: none; border-radius: 8px; font-weight: bold; cursor: pointer; width: 100%; }
-    .hidden { display: none; }
-    .user { display:flex; justify-content: space-between; align-items:center; margin:10px 0; padding:5px 10px; background: #2a2a2a; border-radius:5px; }
-    .leader { animation: glow 2s infinite alternate; }
-    @keyframes glow { from { box-shadow: 0 0 5px #ffd700; } to { box-shadow: 0 0 20px #ffd700; } }
-    select { padding: 3px; border-radius: 5px; border: none; background: #444; color: #fff; }
-	.block {
-  background: #2a2a2a;
+<meta charset="UTF-8">
+<title>Профиль | Empire Family</title>
+
+<style>
+body {
+  margin: 0;
+  font-family: Arial;
+  background: linear-gradient(135deg, #0d0d0d, #1a1a1a);
+  color: white;
+}
+
+header {
+  padding: 20px;
+  text-align: center;
+  background: #111;
+  border-bottom: 2px solid #ffcc00;
+}
+
+h1 { color: #ffcc00; }
+
+.container {
+  max-width: 600px;
+  margin: 40px auto;
+  background: #1e1e1e;
+  padding: 25px;
+  border-radius: 15px;
+  box-shadow: 0 0 20px rgba(255,204,0,0.3);
+}
+
+.hidden { display: none; }
+
+/* ===== БЛОКИ ===== */
+.block {
+  background: linear-gradient(145deg, #1f1f1f, #2a2a2a);
   padding: 20px;
   margin-top: 20px;
-  border-radius: 10px;
-  text-align: left;
+  border-radius: 15px;
+  position: relative;
+  overflow: hidden;
 }
 
 .block h3 {
@@ -34,203 +54,106 @@
 
 .block li {
   background: #333;
-  margin: 5px 0;
-  padding: 8px;
-  border-radius: 5px;
+  margin: 6px 0;
+  padding: 10px;
+  border-radius: 8px;
+  display: flex;
+  justify-content: space-between;
 }
-  </style>
+
+/* свечение */
+.block::before {
+  content: "";
+  position: absolute;
+  width: 200%;
+  height: 200%;
+  background: linear-gradient(120deg, transparent, rgba(255,204,0,0.2), transparent);
+  animation: shine 6s linear infinite;
+}
+
+@keyframes shine {
+  0% { transform: translate(-100%, -100%) rotate(45deg); }
+  100% { transform: translate(100%, 100%) rotate(45deg); }
+}
+
+/* статистика */
+.stat {
+  display: flex;
+  justify-content: space-between;
+  background: #2f2f2f;
+  padding: 10px;
+  border-radius: 8px;
+  margin-bottom: 10px;
+}
+
+button {
+  padding: 10px;
+  margin-top: 15px;
+  width: 100%;
+  background: #ffcc00;
+  border: none;
+  border-radius: 8px;
+  font-weight: bold;
+  cursor: pointer;
+}
+</style>
 </head>
+
 <body>
 
-<header style="position:relative; overflow:hidden; background: linear-gradient(270deg, #111111, #1a1a1a, #111111); background-size:600% 600%; animation: gradientShift 15s ease infinite; padding:40px 0; text-align:center;">
-  <style>
-    @keyframes gradientShift { 0% { background-position: 0% 50%; } 50% { background-position: 100% 50%; } 100% { background-position: 0% 50%; } }
-    @keyframes shineMove { 0% { transform: rotate(45deg) translate(-100%, -100%); } 100% { transform: rotate(45deg) translate(100%, 100%); } }
-    @keyframes textGlow { 0%,100% { color:#ffcc00; text-shadow:2px 2px 6px rgba(0,0,0,0.7);} 50% { color:#ffd633; text-shadow:2px 2px 12px rgba(255,204,0,0.8);} }
-  </style>
-
-  <div style="position:relative; display:flex; justify-content:center; align-items:center; gap:20px; flex-wrap:wrap; z-index:1;">
-    <img src="https://i.ibb.co/BHz6q3XP/logo.png" style="height:100px;">
-    <h1 style="font-size:50px; letter-spacing:4px; animation:textGlow 3s ease-in-out infinite; margin:0;">Empire Профиль</h1>
-  </div>
-
-  <nav style="margin-top:20px; position:relative; z-index:2;">
-    <a href="index.html" style="color:white; margin:0 15px; text-decoration:none;">Главная</a>
-    <a href="#" style="color:#ffcc00; margin:0 15px; text-decoration:none;">Профиль</a>
-  </nav>
+<header>
+<h1>Empire Profile</h1>
 </header>
-
-<div class="container" id="choiceBox">
-  <h2>Добро пожаловать</h2>
-  <p>Выберите действие:</p>
-  <button onclick="showLogin()">Войти</button>
-  <button onclick="showRegister()">Зарегистрироваться</button>
-</div>
-
-<div class="container hidden" id="loginBox">
-  <h2>Вход</h2>
-  <input type="text" id="login" placeholder="Логин">
-  <input type="password" id="password" placeholder="Пароль">
-  <button onclick="login()">Войти</button>
-</div>
-
-<div class="container hidden" id="registerBox">
-  <h2>Регистрация</h2>
-  <input type="text" id="regLogin" placeholder="Логин (укажите свой)" required>
-  <input type="text" id="regDiscord" placeholder="Discord (укажите свой)" required>
-  <input type="text" id="regNickname" placeholder="NickName (впишите свой ник в игре)" required>
-  <input type="password" id="regPassword" placeholder="Пароль" required>
-  <button onclick="register()">Создать аккаунт</button>
-</div>
 
 <div class="container hidden" id="profileBox">
 
-  <h2 id="name"></h2>
+<h2 id="name"></h2>
 
-  <!-- 📊 Статистика -->
-  <div class="block">
-    <h3>📊 Статистика</h3>
-    <p>Контрактов выполнено: <span id="contracts">0</span></p>
-    <p>Заработано: <span id="money">0</span>$</p>
-  </div>
+<div class="block">
+<h3>📊 Статистика</h3>
 
-  <!-- 📜 История -->
-  <div class="block">
-    <h3>📜 История контрактов</h3>
-    <ul id="history"></ul>
-  </div>
-
-  <!-- 💰 Премии -->
-  <div class="block">
-    <h3>💰 Премии</h3>
-    <ul id="bonuses"></ul>
-  </div>
-
-  <button onclick="logout()">Выйти</button>
+<div class="stat">
+<span>Контракты</span>
+<b id="contracts">0</b>
 </div>
 
-<div class="container hidden" id="adminPanel"></div>
+<div class="stat">
+<span>Заработано</span>
+<b id="money">0$</b>
+</div>
+</div>
+
+<div class="block">
+<h3>📜 История контрактов</h3>
+<ul id="history"></ul>
+</div>
+
+<div class="block">
+<h3>💰 Премии</h3>
+<ul id="bonuses"></ul>
+</div>
+
+<button onclick="logout()">Выйти</button>
+
+</div>
 
 <script>
-const ADMIN_NICKNAME = "Cosmo";
-let users = JSON.parse(localStorage.getItem('users')) || [];
-
-function hideAll() {
-  document.getElementById('choiceBox').classList.add('hidden');
-  document.getElementById('loginBox').classList.add('hidden');
-  document.getElementById('registerBox').classList.add('hidden');
-  document.getElementById('profileBox').classList.add('hidden');
-}
-
-function showLogin() { hideAll(); document.getElementById('loginBox').classList.remove('hidden'); }
-function showRegister() { hideAll(); document.getElementById('registerBox').classList.remove('hidden'); }
-
-function register() {
-  const login = document.getElementById('regLogin').value;
-  const discord = document.getElementById('regDiscord').value;
-  const nickname = document.getElementById('regNickname').value;
-  const password = document.getElementById('regPassword').value;
-
-  const profile = { login, discord, nickname, password, role: 'member' };
-  localStorage.setItem('profile', JSON.stringify(profile));
-  users.push(profile);
-  localStorage.setItem('users', JSON.stringify(users));
-
-  alert('Аккаунт создан!');
-  showLogin();
-}
-
-function login() {
-  const loginInput = document.getElementById('login').value;
-  const passwordInput = document.getElementById('password').value;
-  const profile = JSON.parse(localStorage.getItem('profile'));
-  if(profile && loginInput === profile.login && passwordInput === profile.password) {
-    localStorage.setItem('auth', 'true');
-    showProfile();
-  } else alert('Неверный логин или пароль');
-}
-
-function logout() {
-  localStorage.removeItem('auth');
-  location.reload();
-}
 
 function showProfile() {
-  hideAll();
   document.getElementById('profileBox').classList.remove('hidden');
 
   const profile = JSON.parse(localStorage.getItem('profile'));
-  document.getElementById('name').textContent = profile.login;
-  document.getElementById('discord').textContent = profile.discord;
-  document.getElementById('nickname').textContent = profile.nickname;
-
-  const makeAdminBtn = document.getElementById('makeAdminBtn');
-  const panel = document.getElementById('adminPanel');
-
-  makeAdminBtn.classList.add('hidden');
-  panel.classList.add('hidden');
-  panel.innerHTML = '';
-
-  if(profile.nickname.trim() === ADMIN_NICKNAME) {
-    if(profile.role !== 'admin') {
-      makeAdminBtn.classList.remove('hidden');
-      makeAdminBtn.onclick = () => {
-        profile.role = 'admin';
-        localStorage.setItem('profile', JSON.stringify(profile));
-        alert('Теперь вы администратор!');
-        renderAdminPanel();
-        makeAdminBtn.classList.add('hidden');
-      };
-    }
-    renderAdminPanel();
-  }
-}
-
-function renderAdminPanel() {
-  const profile = JSON.parse(localStorage.getItem('profile'));
-  if(!profile || profile.role !== 'admin' || profile.nickname.trim() !== ADMIN_NICKNAME) return;
-
-  const panel = document.getElementById('adminPanel');
-  panel.classList.remove('hidden');
-  panel.innerHTML = '<h2>Панель управления ролями (Администратор)</h2>';
-
-  let users = JSON.parse(localStorage.getItem('users')) || [];
-  users.forEach((u,i) => {
-    const div = document.createElement('div');
-    div.className = 'user';
-    if(u.role === 'leader') div.classList.add('leader');
-    div.innerHTML = `<span>${u.nickname} (${u.login})</span>` +
-                    `<select data-index="${i}">` +
-                    Object.keys({member:'#00bfff',moderator:'#32cd32',leader:'#ffd700'}).map(r =>
-                      `<option value="${r}" ${u.role===r?'selected':''}>${r}</option>`
-                    ).join('') + '</select>';
-    panel.appendChild(div);
-  });
-
-  document.querySelectorAll('#adminPanel select').forEach(sel => {
-    sel.addEventListener('change', e => {
-      users[e.target.dataset.index].role = e.target.value;
-      localStorage.setItem('users', JSON.stringify(users));
-      renderAdminPanel();
-    });
-  });
-}
-
-if(localStorage.getItem('auth') === 'true') showProfile();
-function showProfile() {
-  hideAll();
-  document.getElementById('profileBox').classList.remove('hidden');
-
-  const profile = JSON.parse(localStorage.getItem('profile'));
+  if (!profile) return;
 
   document.getElementById('name').textContent = profile.login;
 
   document.getElementById('contracts').textContent = profile.contracts || 0;
-  document.getElementById('money').textContent = profile.money || 0;
+  document.getElementById('money').textContent = (profile.money || 0) + "$";
 
   renderHistory();
   renderBonuses();
 }
+
 function renderHistory() {
   const profile = JSON.parse(localStorage.getItem('profile'));
   const list = document.getElementById('history');
@@ -239,26 +162,11 @@ function renderHistory() {
 
   (profile.history || []).forEach(item => {
     const li = document.createElement('li');
-    li.textContent = item;
+    li.innerHTML = `<span>📜 ${item}</span><span>✔</span>`;
     list.appendChild(li);
   });
 }
 
-function addContract() {
-  const input = document.getElementById('newContract');
-  const profile = JSON.parse(localStorage.getItem('profile'));
-
-  if (!profile.history) profile.history = [];
-
-  profile.history.push(input.value);
-  profile.contracts = (profile.contracts || 0) + 1;
-  profile.money = (profile.money || 0) + 1000;
-
-  localStorage.setItem('profile', JSON.stringify(profile));
-
-  input.value = "";
-  showProfile();
-}
 function renderBonuses() {
   const profile = JSON.parse(localStorage.getItem('profile'));
   const list = document.getElementById('bonuses');
@@ -267,25 +175,23 @@ function renderBonuses() {
 
   (profile.bonuses || []).forEach(item => {
     const li = document.createElement('li');
-    li.textContent = item;
+    li.innerHTML = `<span>💰 ${item}</span><span>+$</span>`;
     list.appendChild(li);
   });
 }
 
-function addBonus() {
-  const input = document.getElementById('newBonus');
-  const profile = JSON.parse(localStorage.getItem('profile'));
+function logout() {
+  localStorage.removeItem('auth');
+  location.reload();
+}
 
-  if (!profile.bonuses) profile.bonuses = [];
-
-  profile.bonuses.push(input.value);
-
-  localStorage.setItem('profile', JSON.stringify(profile));
-
-  input.value = "";
+// авто вход
+if (localStorage.getItem('auth') === 'true') {
   showProfile();
 }
+
 </script>
 
 </body>
 </html>
+```
