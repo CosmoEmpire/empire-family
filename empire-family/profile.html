@@ -32,7 +32,7 @@
     <h1 style="font-size:50px; letter-spacing:4px; animation:textGlow 3s ease-in-out infinite; margin:0;">Empire Профиль</h1>
   </div>
 
-  <div class="header-avatar" id="headerAvatar">👤</div>
+  <div class="header-avatar" id="headerAvatar">🤖</div>
 
   <div style="position:absolute; top:-50%; left:-50%; width:200%; height:200%; background: linear-gradient(120deg, rgba(255,255,255,0.05) 0%, rgba(255,255,255,0.2) 50%, rgba(255,255,255,0.05) 100%); transform: rotate(45deg); animation: shineMove 6s linear infinite;"></div>
 
@@ -61,11 +61,12 @@
   <input type="text" id="regLogin" placeholder="Логин (ставьте какой хотите)" required>
   <input type="text" id="regDiscord" placeholder="Discord (ставьте какой хотите)" required>
   <input type="text" id="regNickname" placeholder="NickName (впишите свой ник в игре)" required>
+  <input type="password" id="regPassword" placeholder="Пароль" required>
   <button onclick="register()">Создать аккаунт</button>
 </div>
 
 <div class="container hidden" id="profileBox">
-  <div class="avatar" id="avatar">👤</div>
+  <div class="avatar" id="avatar">🤖</div>
   <h2 id="name"></h2>
   <p><b>Discord:</b> <span id="discord"></span></p>
   <p><b>NickName:</b> <span id="nickname"></span></p>
@@ -91,8 +92,9 @@ function register() {
   const login = document.getElementById('regLogin').value;
   const discord = document.getElementById('regDiscord').value;
   const nickname = document.getElementById('regNickname').value;
-  const profile = { login, discord, nickname, role: 'member' };
+  const password = document.getElementById('regPassword').value;
 
+  const profile = { login, discord, nickname, password, role: 'member' };
   localStorage.setItem('profile', JSON.stringify(profile));
   users.push(profile);
   localStorage.setItem('users', JSON.stringify(users));
@@ -104,12 +106,12 @@ function register() {
 
 function login() {
   const loginInput = document.getElementById('login').value;
-  const discordInput = document.getElementById('password').value;
+  const passwordInput = document.getElementById('password').value;
   const profile = JSON.parse(localStorage.getItem('profile'));
-  if(profile && loginInput === profile.login) {
+  if(profile && loginInput === profile.login && passwordInput === profile.password) {
     localStorage.setItem('auth', 'true');
     showProfile();
-  } else alert('Неверный логин');
+  } else alert('Неверный логин или пароль');
 }
 
 function logout() {
@@ -120,7 +122,6 @@ function logout() {
 function showProfile() {
   hideAll();
   document.getElementById('profileBox').classList.remove('hidden');
-
   const profile = JSON.parse(localStorage.getItem('profile'));
   if(profile) {
     document.getElementById('name').textContent = profile.login;
