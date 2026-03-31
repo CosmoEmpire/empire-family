@@ -119,41 +119,41 @@ function showProfile() {
   document.getElementById('profileBox').classList.remove('hidden');
 
   const profile = JSON.parse(localStorage.getItem('profile'));
-  console.log(profile);
-
   document.getElementById('name').textContent = profile.login;
   document.getElementById('discord').textContent = profile.discord;
   document.getElementById('nickname').textContent = profile.nickname;
 
   const makeAdminBtn = document.getElementById('makeAdminBtn');
+  const panel = document.getElementById('adminPanel');
 
-  // кнопка для Cosmo
-  if(profile.nickname.trim() === ADMIN_NICKNAME && profile.role !== 'admin') {
-    makeAdminBtn.classList.remove('hidden');
-    makeAdminBtn.onclick = () => {
-      profile.role = 'admin';
-      localStorage.setItem('profile', JSON.stringify(profile));
-      alert('Теперь вы администратор!');
-      renderAdminPanel();
-      makeAdminBtn.classList.add('hidden');
-    };
-  } else {
-    makeAdminBtn.classList.add('hidden');
+  makeAdminBtn.classList.add('hidden');
+  panel.classList.add('hidden');
+  panel.innerHTML = '';
+
+  if(profile.nickname.trim() === ADMIN_NICKNAME) {
+    if(profile.role !== 'admin') {
+      makeAdminBtn.classList.remove('hidden');
+      makeAdminBtn.onclick = () => {
+        profile.role = 'admin';
+        localStorage.setItem('profile', JSON.stringify(profile));
+        alert('Теперь вы администратор!');
+        renderAdminPanel();
+        makeAdminBtn.classList.add('hidden');
+      };
+    }
+    renderAdminPanel();
   }
-
-  renderAdminPanel();
 }
 
 function renderAdminPanel() {
   const profile = JSON.parse(localStorage.getItem('profile'));
-  const panel = document.getElementById('adminPanel');
-  if(!profile || profile.role !== 'admin' || profile.nickname !== ADMIN_NICKNAME) {
-    panel.classList.add('hidden');
-    return;
-  }
+  if(!profile || profile.role !== 'admin' || profile.nickname.trim() !== ADMIN_NICKNAME) return;
 
+  const panel = document.getElementById('adminPanel');
   panel.classList.remove('hidden');
   panel.innerHTML = '<h2>Панель управления ролями (Администратор)</h2>';
+
+  let users = JSON.parse(localStorage.getItem('users')) || [];
   users.forEach((u,i) => {
     const div = document.createElement('div');
     div.className = 'user';
@@ -165,6 +165,7 @@ function renderAdminPanel() {
                     ).join('') + '</select>';
     panel.appendChild(div);
   });
+
   document.querySelectorAll('#adminPanel select').forEach(sel => {
     sel.addEventListener('change', e => {
       users[e.target.dataset.index].role = e.target.value;
