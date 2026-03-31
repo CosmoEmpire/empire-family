@@ -68,8 +68,52 @@
 </head>
 <body>
 
-<header>
-  <h1>Профиль</h1>
+<header style="position:relative; overflow:hidden; background: linear-gradient(270deg, #111111, #1a1a1a, #111111); background-size:600% 600%; animation: gradientShift 15s ease infinite; padding:40px 0; text-align:center;">
+  <style>
+    @keyframes gradientShift {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+    @keyframes shineMove {
+      0% { transform: rotate(45deg) translate(-100%, -100%); }
+      100% { transform: rotate(45deg) translate(100%, 100%); }
+    }
+    @keyframes textGlow {
+      0%,100% { color:#ffcc00; text-shadow:2px 2px 6px rgba(0,0,0,0.7);} 
+      50% { color:#ffd633; text-shadow:2px 2px 12px rgba(255,204,0,0.8);} 
+    }
+
+    .header-avatar {
+      position: absolute;
+      top: 20px;
+      right: 30px;
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+      background: #333;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: bold;
+      color: white;
+      border: 2px solid #ffcc00;
+    }
+  </style>
+
+  <div style="position:relative; display:flex; justify-content:center; align-items:center; gap:20px; flex-wrap:wrap; z-index:1;">
+    <img src="https://i.ibb.co/BHz6q3XP/logo.png" style="height:100px;">
+    <h1 style="font-size:50px; letter-spacing:4px; animation:textGlow 3s ease-in-out infinite; margin:0;">Empire Профиль</h1>
+  </div>
+
+  <div class="header-avatar" id="headerAvatar">👤</div>
+
+  <div style="position:absolute; top:-50%; left:-50%; width:200%; height:200%; background: linear-gradient(120deg, rgba(255,255,255,0.05) 0%, rgba(255,255,255,0.2) 50%, rgba(255,255,255,0.05) 100%); transform: rotate(45deg); animation: shineMove 6s linear infinite;"></div>
+
+  <nav style="margin-top:20px; position:relative; z-index:2;">
+    <a href="index.html" style="color:white; margin:0 15px; text-decoration:none;">Главная</a>
+    <a href="#" style="color:#ffcc00; margin:0 15px; text-decoration:none;">Профиль</a>
+  </nav>
 </header>
 
 <!-- CHOICE -->
@@ -170,6 +214,12 @@
   if (localStorage.getItem('auth') === 'true') {
     showProfile();
   }
+  const profileData = JSON.parse(localStorage.getItem('profile'));
+
+if (profileData && profileData.realname) {
+  document.getElementById('headerAvatar').textContent =
+    profileData.realname.charAt(0).toUpperCase();
+}
 </script>
 
 </body>
