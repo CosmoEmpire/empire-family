@@ -139,41 +139,62 @@ button {
 
 <script>
 
-function showProfile() {
-  document.getElementById('profileBox').classList.remove('hidden');
+function getProfile() {
+  let profile = JSON.parse(localStorage.getItem('profile'));
 
-  const profile = JSON.parse(localStorage.getItem('profile'));
-  if (!profile) return;
+  if (!profile) {
+    profile = {
+      login: "Empire User",
+      contracts: 0,
+      money: 0,
+      history: [],
+      bonuses: []
+    };
+    localStorage.setItem('profile', JSON.stringify(profile));
+  }
 
-  document.getElementById('name').textContent = profile.login;
-
-  document.getElementById('contracts').textContent = profile.contracts || 0;
-  document.getElementById('money').textContent = (profile.money || 0) + "$";
-
-  renderHistory();
-  renderBonuses();
+  return profile;
 }
 
-function renderHistory() {
-  const profile = JSON.parse(localStorage.getItem('profile'));
-  const list = document.getElementById('history');
+function showProfile() {
+  const profile = getProfile();
 
+  document.getElementById('profileBox').classList.remove('hidden');
+
+  document.getElementById('name').textContent = profile.login;
+  document.getElementById('contracts').textContent = profile.contracts;
+  document.getElementById('money').textContent = profile.money + "$";
+
+  renderHistory(profile);
+  renderBonuses(profile);
+}
+
+function renderHistory(profile) {
+  const list = document.getElementById('history');
   list.innerHTML = "";
 
-  (profile.history || []).forEach(item => {
+  if (profile.history.length === 0) {
+    list.innerHTML = "<li>Нет контрактов</li>";
+    return;
+  }
+
+  profile.history.forEach(item => {
     const li = document.createElement('li');
     li.innerHTML = `<span>📜 ${item}</span><span>✔</span>`;
     list.appendChild(li);
   });
 }
 
-function renderBonuses() {
-  const profile = JSON.parse(localStorage.getItem('profile'));
+function renderBonuses(profile) {
   const list = document.getElementById('bonuses');
-
   list.innerHTML = "";
 
-  (profile.bonuses || []).forEach(item => {
+  if (profile.bonuses.length === 0) {
+    list.innerHTML = "<li>Нет бонусов</li>";
+    return;
+  }
+
+  profile.bonuses.forEach(item => {
     const li = document.createElement('li');
     li.innerHTML = `<span>💰 ${item}</span><span>+$</span>`;
     list.appendChild(li);
@@ -185,10 +206,8 @@ function logout() {
   location.reload();
 }
 
-// авто вход
-if (localStorage.getItem('auth') === 'true') {
-  showProfile();
-}
+// запускаем всегда
+showProfile();
 
 </script>
 
